@@ -325,6 +325,8 @@ $this_veges_record = mysqli_fetch_assoc($this_veges_result)
         <th>Variety</th>
         <th>Cost</th>
         <th>Calories</th>
+        <th>Submit</th>
+        <th>Delete</th>
     </tr>
 
     <?php
@@ -337,6 +339,7 @@ $this_veges_record = mysqli_fetch_assoc($this_veges_result)
         echo "<td><input type=text name=Calories value='" .$row['Calories']. "'></td>";
         echo "<input type=hidden name=VegeID value='" .$row['VegeID']. "'>";
         echo "<td><input type=submit></td>";
+        echo "<td><a href=v_delete.php?VegeID=" .$row['VegeID']. ">Delete</a></td>";
         echo "</form></tr>";
 
     }
