@@ -327,18 +327,22 @@ $this_fruit_record = mysqli_fetch_assoc($this_fruit_result);
             <th>Variety</th>
             <th>Cost</th>
             <th>Calories</th>
+            <th>Submit</th>
+            <th>Delete</th>
+
         </tr>
 
         <?php
         while($row = mysqli_fetch_array($update_fruits_record))
         {
-            echo "<tr><form action = update.php method=post>";
+            echo "<tr><form action = fupdate.php method=post>";
             echo "<td><input type=text name= FName value='" .$row['FName']. "'></td>";
             echo "<td><input type=text name=Variety value='" .$row['Variety']. "'></td>";
             echo "<td><input type=text name=Cost value='" .$row['Cost']. "'></td>";
             echo "<td><input type=text name=Calories value='" .$row['Calories']. "'></td>";
             echo "<input type=hidden name=FruitID value='" .$row['FruitID']. "'>";
             echo "<td><input type=submit></td>";
+            echo "<td><a href=f_delete.php?FruitID=" .$row['FruitID']. ">Delete</a></td>";
             echo "</form></tr>";
 
         }
