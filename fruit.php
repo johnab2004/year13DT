@@ -16,12 +16,17 @@ if(isset($_GET['fruit'])){
 }
 
 
+$update_fruits = "SELECT * FROM fruit";
+$update_fruits_record = mysqli_query($con, $update_fruits);
+
 $all_fruits_query ="Select FruitID, FName from fruit";
 $all_fruits_result = mysqli_query($con, $all_fruits_query);
 
 $this_fruit_query = "SELECT FName, Variety, Cost, Calories FROM fruit WHERE FruitID = '" .$id . "'";
 $this_fruit_result = mysqli_query($con, $this_fruit_query);
 $this_fruit_record = mysqli_fetch_assoc($this_fruit_result);
+
+
 
 ?>
 
@@ -300,7 +305,7 @@ $this_fruit_record = mysqli_fetch_assoc($this_fruit_result);
 
     <div class="add">
 
-    <form action='insert.php' method="post">
+    <form action='f_insert.php' method="post">
 
         Fruit ID :<input type="text" name="FruitID"><br>
         Fruit Name :<input type="text" name="FName"><br>
@@ -312,6 +317,34 @@ $this_fruit_record = mysqli_fetch_assoc($this_fruit_result);
     </form>
 
     </div>
+
+
+    <h3>Update Fruits</h3>
+
+    <table>
+        <tr>
+            <th>Fruit Name</th>
+            <th>Variety</th>
+            <th>Cost</th>
+            <th>Calories</th>
+        </tr>
+
+        <?php
+        while($row = mysqli_fetch_array($update_fruits_record))
+        {
+            echo "<tr><form action = update.php method=post>";
+            echo "<td><input type=text name= FName value='" .$row['FName']. "'></td>";
+            echo "<td><input type=text name=Variety value='" .$row['Variety']. "'></td>";
+            echo "<td><input type=text name=Cost value='" .$row['Cost']. "'></td>";
+            echo "<td><input type=text name=Calories value='" .$row['Calories']. "'></td>";
+            echo "<input type=hidden name=FruitID value='" .$row['FruitID']. "'>";
+            echo "<td><input type=submit></td>";
+            echo "</form></tr>";
+
+        }
+        ?>
+    </table>
+
 
 
 </body>
