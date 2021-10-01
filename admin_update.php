@@ -1,10 +1,21 @@
 <?php
 
+// starts a session so that the user has a specific set session that allows them to input the password
 session_start();
 
-// connects the website to the database
+// connection code that connects the website to the database
 
-include 'connection.php';
+$con = mysqli_connect("localhost", "johnab", "blacklime65", "johnab_market2");
+if(mysqli_connect_errno()){
+    echo "Failed to connect to MySQL:".mysqli_connect_error(); die();}
+else{
+    echo "connected to database";
+
+}
+
+if((!isset($_SESSION['logged_in'])) or $_SESSION['logged_in'] !=1){
+    header("Location: error.php");
+}
 
 // query that selects everything from the table fruits, so that it can be updated to the new info
 $update_fruits = "SELECT * FROM fruit";
@@ -13,10 +24,6 @@ $update_fruits_record = mysqli_query($con, $update_fruits);
 // query that selects everything from the table vege, so that it can be updated to the new info
 $update_veges = "SELECT * FROM vege";
 $update_veges_record = mysqli_query($con, $update_veges);
-
-if((!isset($_SESSION['logged_in'])) or $_SESSION['logged_in'] !=1){
-    header("Location: error.php");
-}
 
 ?>
 
@@ -29,7 +36,7 @@ if((!isset($_SESSION['logged_in'])) or $_SESSION['logged_in'] !=1){
 <head>
     <!-- creates the page for the admin to update the vege and fruit information -->
     <title> Abia's Market</title>
-    <meta charset=utf-8>
+    <meta charset=utf-8">
     <link rel='stylesheet' type='text/css' href='style.css'>
 </head>
 
@@ -41,11 +48,12 @@ if((!isset($_SESSION['logged_in'])) or $_SESSION['logged_in'] !=1){
         <!-- the connection link to the other pages from the update page-->
 
         <a href='index.php'>HOME</a>
-        <a href='admin.php'>ADMIN</a>
         <a href='fruit.php'>FRUIT</a>
         <a href='vege.php'>VEGE</a>
         <a href='specials.php'>SPECIALS</a>
+        <a href='admin.php'>ADMIN</a>
         <a href='signup.php'>SIGN-UP</a>
+        <a href='process_logout.php'>ADMIN LOGOUT</a>
 
     </nav>
 
@@ -61,13 +69,11 @@ if((!isset($_SESSION['logged_in'])) or $_SESSION['logged_in'] !=1){
 
         <!-- There are different inputs for all information that is being added to the database-->
 
-        <!-- The following max and min lengths refer to the inputs, if any of these aren't met an error message will be revealed -->
-
-        <label>Fruit ID :<input type="text" name="FruitID" maxlength="3" minlength="3" required><br></label>
-       <label> Fruit Name :<input type="text" name="FName" maxlength="40" minlength="1" required><br></label>
-        <label> Variety :<input type="text" name="Variety" maxlength="40" minlength="1" required><br></label>
-        <label>Cost :<input type="text" name="Cost" maxlength="6" minlength="2" required><br></label>
-        <label>Calories :<input type="text" name="Calories" maxlength="5" minlength="1" required><br></label>
+        Fruit ID :<input type="text" name="FruitID"><br>
+        Fruit Name :<input type="text" name="FName"><br>
+        Variety :<input type="text" name="Variety"><br>
+        Cost :<input type="text" name="Cost"><br>
+        Calories :<input type="text" name="Calories"><br>
         <input type="submit" value="Insert">
 
     </form>
@@ -122,15 +128,14 @@ if((!isset($_SESSION['logged_in'])) or $_SESSION['logged_in'] !=1){
 
     <!-- This form acts with inputs for each asoect that is being added to the database -->
 
-    <!-- The following max and min lengths refer to the inputs, if any of these aren't met an error message will be revealed -->
 
     <form action='v_insert.php' method="post">
 
-        <label> Vege ID :<input type="text" name="VegeID" maxlength="3" minlength="3" required><br></label>
-        <label>Vege Name :<input type="text" name="VName" maxlength="40" minlength="1" required><br></label>
-        <label>Variety :<input type="text" name="Variety" maxlength="40" minlength="1" required><br></label>
-        <label>Cost :<input type="text" name="Cost" maxlength="6" minlength="2" required><br></label>
-        <label>Calories :<input type="text" name="Calories" maxlength="5" minlength="1" required><br></label>
+        Vege ID :<input type="text" name="VegeID"><br>
+        Vege Name :<input type="text" name="VName"><br>
+        Variety :<input type="text" name="Variety"><br>
+        Cost :<input type="text" name="Cost"><br>
+        Calories :<input type="text" name="Calories"><br>
 
         <input type="submit" value="Insert">
 
